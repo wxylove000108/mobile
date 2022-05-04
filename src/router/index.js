@@ -1,25 +1,40 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import {
+    createRouter,
+    createWebHashHistory
+} from 'vue-router'
+import { AlignTextLeft, MusicMenu } from "@icon-park/vue-next";
 
-const routes = [
-  {
+import Layout from '@/Layout/index.jsx'
+
+const routes = [{
     path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+    name: 'Layout',
+    component: Layout,
+    redirect: '/home',
+    children: [{
+        path: 'home',
+        name: 'Home',
+        meta: {
+            navBarLeftIcon: AlignTextLeft,
+            navBarRightIcon: MusicMenu,
+            navBarComponent: 'navBarCenter'
+        },
+        component: () =>
+            import ('@/pages/home/home')
+    }, {
+        path: 'my',
+        name: 'My',
+        meta: {
+            navBarLeftIcon: AlignTextLeft,
+        },
+        component: () =>
+            import ('@/pages/my/my')
+    }]
+}, ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes
+    history: createWebHashHistory(),
+    routes
 })
 
 export default router
